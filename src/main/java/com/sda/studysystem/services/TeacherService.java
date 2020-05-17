@@ -32,7 +32,7 @@ public interface TeacherService {
      * @param teacherId
      * @return Teacher
      */
-    Teacher getById(String teacherId);
+    Teacher getById(Long teacherId);
 
     /**
      * To get all the teachers
@@ -43,10 +43,17 @@ public interface TeacherService {
 
 
     /**
-     * Delete teacher by Id
+     * Delete teacher (change active state) by Id
      *
      * @param teacherId
-     * @return is it deleted
+     * @return isActive = false;
      */
-    boolean deleteTeacherById(String teacherId);
+    boolean deleteTeacherById(Long teacherId);
+
+    /**
+     * Restore teacher (change active state) by Id
+     * @param teacherId
+     * @return isActive = true;
+     */
+    boolean restoreTeacherById(Long teacherId);
 }

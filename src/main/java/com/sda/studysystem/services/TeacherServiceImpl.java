@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  * Implementation of TeacherService
+ *
  * @author Tanel
  */
 
@@ -21,18 +21,18 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public boolean createTeacher(Teacher teacher) {
-        if(teacher == null) {
+        if (teacher == null) {
             return false;
         }
 
-        teacher.setTeacherId(getNewTeacherId());
+        teacher.setTeacherId(teacher.getTeacherId());
         teacherRepo.save(teacher);
         return true;
     }
 
     @Override
     public boolean updateTeacher(Teacher teacher) {
-        if(teacher == null || teacherRepo.existsById(teacher.getTeacherId())) {
+        if (teacher == null || teacherRepo.existsById(teacher.getTeacherId())) {
             return false;
         }
         teacherRepo.saveAndFlush(teacher);
@@ -40,7 +40,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher getById(String teacherId) {
+    public Teacher getById(Long teacherId) {
         return teacherRepo.getOne(teacherId);
     }
 
@@ -50,15 +50,24 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public boolean deleteTeacherById(String teacherId) {
-        if(teacherId == null || teacherRepo.existsById(teacherId)){
+    public boolean deleteTeacherById(Long teacherId) {
+        Teacher teacher = getById(teacherId);
+        if (teacherId == null) {
             return false;
         }
-        teacherRepo.deleteById(teacherId);
+        teacher.setActive(false);
+        updateTeacher(teacher);
         return true;
     }
 
-    private String getNewTeacherId() {
-        return null;
+    @Override
+    public boolean restoreTeacherById(Long teacherId) {
+        Teacher teacher = getById(teacherId);
+        if (teacherId == null) {
+            return false;
+        }
+        teacher.setActive(true);
+        return updateTeacher(teacher);
     }
+
 }

@@ -33,6 +33,7 @@ public class StudentController {
     @PostMapping("/addStudent")
     public String addStudent(Student student, Model model) {
         boolean createResult = studentService.createStudent(student);
+        student.setActive(true);
 
         if (createResult) {
             model.addAttribute("message", "Student has been successfully created.");
@@ -52,7 +53,7 @@ public class StudentController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateStudent(@PathVariable("id") String studentId, Student student, Model model) {
+    public String updateStudent(@PathVariable("id") Long studentId, Student student, Model model) {
         student.setStudentId(studentId);
         boolean updateResult = studentService.updateStudent(student);
 
@@ -69,7 +70,7 @@ public class StudentController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteStudent(@PathVariable("id") String studentId, Model model) {
+    public String deleteStudent(@PathVariable("id") Long studentId, Model model) {
         boolean deleteResult = studentService.deleteStudentById(studentId);
 
         if (deleteResult) {
@@ -77,6 +78,20 @@ public class StudentController {
             model.addAttribute("messageType", "success");
         } else {
             model.addAttribute("message", "Error deleting student.");
+            model.addAttribute("messageType", "error");
+        }
+        return showAllStudents(model);
+    }
+
+    @GetMapping("/restore/{id}")
+    public String restoreStudent(@PathVariable("id") Long studentId, Model model) {
+        boolean restoreResult = studentService.restoreStudentById(studentId);
+
+        if (restoreResult) {
+            model.addAttribute("message", "Student has been successfully restored.");
+            model.addAttribute("messageType", "success");
+        } else {
+            model.addAttribute("message", "Error restoring student.");
             model.addAttribute("messageType", "error");
         }
         return showAllStudents(model);

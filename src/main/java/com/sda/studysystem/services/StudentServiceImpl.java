@@ -15,17 +15,17 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public boolean createStudent(Student student) {
-        if(student == null) {
+        if (student == null) {
             return false;
         }
-        student.setStudentId(getNewStudentId());
+        student.setStudentId(student.getStudentId());
         studentRepo.save(student);
         return true;
     }
 
     @Override
     public boolean updateStudent(Student student) {
-        if(student == null || studentRepo.existsById(student.getStudentId())){
+        if (student == null || studentRepo.existsById(student.getStudentId())) {
             return false;
         }
         studentRepo.saveAndFlush(student);
@@ -33,7 +33,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getById(String studentId) {
+    public Student getById(Long studentId) {
         return studentRepo.getOne(studentId);
     }
 
@@ -43,15 +43,23 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public boolean deleteStudentById(String studentId) {
-        if(studentId == null || studentRepo.existsById(studentId)){
+    public boolean deleteStudentById(Long studentId) {
+        Student student = getById(studentId);
+        if (studentId == null) {
             return false;
         }
-        studentRepo.deleteById(studentId);
+        student.setActive(false);
+        updateStudent(student);
         return true;
     }
 
-    private String getNewStudentId(){
-        return null;
+    @Override
+    public boolean restoreStudentById(Long studentId) {
+        Student student = getById(studentId);
+        if (studentId == null) {
+            return false;
+        }
+        student.setActive(true);
+        return updateStudent(student);
     }
 }

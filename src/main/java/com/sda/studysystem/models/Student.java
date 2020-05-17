@@ -2,8 +2,7 @@ package com.sda.studysystem.models;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -11,10 +10,12 @@ import java.time.LocalDate;
 public class Student {
 
     @Id
-    private String studentId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long studentId;
     private String name;
-    private String school;
+    @OneToOne
+    private School school;
     private LocalDate joinDate;
-    private String grade;
+    private int grade;
     private boolean isActive;
 }

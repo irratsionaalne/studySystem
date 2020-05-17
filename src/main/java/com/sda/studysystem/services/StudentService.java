@@ -10,9 +10,11 @@ public interface StudentService {
 
     boolean updateStudent (Student student);
 
-    Student getById(String studentId);
+    Student getById(Long studentId);
 
     List<Student> getAllStudents();
 
-    boolean deleteStudentById(String studentId);
+    boolean deleteStudentById(Long studentId);
+
+    boolean restoreStudentById(Long studentId);
 }
