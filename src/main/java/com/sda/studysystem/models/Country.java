@@ -20,4 +20,5 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long countryId;
     private String name;
+    private boolean isActive;
 }

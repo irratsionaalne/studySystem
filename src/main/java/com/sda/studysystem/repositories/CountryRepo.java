@@ -1,15 +1,15 @@
 package com.sda.studysystem.repositories;
 
-import com.sda.studysystem.models.Student;
+import com.sda.studysystem.models.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repository for Student
+ * Repository for Country
  *
  * @author Tanel
  */
 
 @Repository
-public interface StudentRepo extends JpaRepository<Student, Long> {
+public interface CountryRepo extends JpaRepository<Country, Long> {
 }

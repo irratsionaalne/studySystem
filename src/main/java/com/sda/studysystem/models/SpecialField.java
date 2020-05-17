@@ -14,8 +14,9 @@ public class SpecialField {
 
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long specialFieldId;
     private String name;
     @OneToOne
     private Category category;
+    private boolean isActive;
 }

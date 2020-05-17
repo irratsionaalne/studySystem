@@ -20,4 +20,5 @@ public class County {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long countyId;
     private String name;
+    private boolean isActive;
 }

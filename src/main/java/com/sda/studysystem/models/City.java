@@ -20,4 +20,5 @@ public class City {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cityId;
     private String name;
+    private boolean isActive;
 }

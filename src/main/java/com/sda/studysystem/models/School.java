@@ -25,5 +25,6 @@ public class School {
     @OneToOne
     private Country country;
     private String zipcode;
+    private boolean isActive;
 
 }
