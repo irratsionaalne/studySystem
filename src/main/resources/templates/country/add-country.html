@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>List of Teachers</title>
+    <title>Add Country</title>
 </head>
 <body>
 <div class="container-fluid">
@@ -49,9 +49,22 @@
         </div>
     </nav>
 </div>
-<div class="jumbotron">
-    <h1 class="display-4">Teachers</h1>
-    <a class="btn btn-primary btn-lg" href="#" role="button">Add Teacher</a>
+<div class="container">
+    <div class="jumbotron">
+        <div th:if="${messageType} == 'error'" class="alert alert-danger" role="alert">
+            <span th:text="${message}"></span>
+        </div>
+        <h3 class="display-4">Add Country</h3>
+        <hr>
+        <form action="#" th:action="@{/country/add}" th:object="${country}" method="post">
+            <div class="form-group">
+                <label for="name">Country name</label>
+                <input th:field="*{name}" type="text" class="form-control" id="name" aria-describedby="nameHelp"  required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="/country/" type="button" class="btn btn-primary btn-lg">Cancel</a>
+        </form>
+    </div>
 </div>
 
 <!-- Optional JavaScript -->

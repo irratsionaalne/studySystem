@@ -22,15 +22,15 @@ public class CountryController {
     public String showAllCountries(Model model) {
         List<Country> countries = countryService.getAllCountries();
         model.addAttribute("countries", countries);
-        return "show-all-countries";
+        return "/country/country-list";
     }
 
     @GetMapping("/add")
-    public String addCountryForm(Model model) {
-        return "add-country";
+    public String addCountryForm(Model model, Country country) {
+        return "/country/add-country";
     }
 
-    @PostMapping("/addCountry")
+    @PostMapping("/add")
     public String addCountry(Country country, Model model) {
         boolean createResult = countryService.createCountry(country);
         country.setActive(true);
@@ -43,17 +43,18 @@ public class CountryController {
             model.addAttribute("country", country);
             model.addAttribute("message", "Error creating country.");
             model.addAttribute("messageType", "error");
-            return addCountryForm(model);
+            return addCountryForm(model, country);
         }
     }
 
-    @GetMapping("/update")
-    public String updateCountryForm(Model model) {
-        return "update-country";
+    @GetMapping("/update/{countryId}")
+    public String updateCountryForm(@PathVariable("countryId") Long countryId, Model model) {
+        model.addAttribute("country", countryService.getById(countryId));
+        return "/country/update-country";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateCountry(@PathVariable("id") Long countryId, Country country, Model model) {
+    @PostMapping("/update/{countryId}")
+    public String updateCountry(@PathVariable("countryId") Long countryId, Country country, Model model) {
         country.setCountryId(countryId);
         boolean updateResult = countryService.updateCountry(country);
 
@@ -65,7 +66,7 @@ public class CountryController {
             model.addAttribute("country", country);
             model.addAttribute("message", "Error updating country.");
             model.addAttribute("messageType", "error");
-            return updateCountryForm(model);
+            return "/country/update-country";
         }
     }
 
